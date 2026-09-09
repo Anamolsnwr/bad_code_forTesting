@@ -13,7 +13,10 @@ def handle_user_request(user_payload, db_connection):
     # Rule SEC005: SQL Injection (String Concatenation)
     username = data_object.get("username")
     cursor = db_connection.cursor()
-    query = f"SELECT * FROM users WHERE username = '{username}'"
+        # Secure parameterized query:
+    query = "SELECT id, username, role FROM users WHERE username = ? AND password_hash = ?"
+    cursor.execute(query, (username, hash_user_password(password_input)))
+    user = cursor.fetchone()
     cursor.execute(query)
     
     # Rule SEC006: Command Injection (os.system with raw input)

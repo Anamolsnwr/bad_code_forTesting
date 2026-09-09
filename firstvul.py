@@ -1,5 +1,6 @@
 import hashlib
 import os
+import ast
 
 def process_user_records(user_input_list, user_secret_key):
     # Rule SEC003: Hardcoded API Secret / Credential
@@ -14,7 +15,9 @@ def process_user_records(user_input_list, user_secret_key):
         
         # Rule SEC001: Unsafe Dynamic Code Execution (eval)
         # Allows Remote Code Execution (RCE) if item contains arbitrary strings
-        eval_result = eval(f"print('Processing: {current_item}')")
+            # Safe literal evaluation:
+ 
+    return ast.literal_eval(code_snippet)
         
     # Rule QUAL004: Silenced Exception (except with pass)
     try:

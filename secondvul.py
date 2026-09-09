@@ -4,7 +4,7 @@ import sqlite3
 
 def handle_user_request(user_payload, db_connection):
     # Rule SEC003: Hardcoded API Secret / Credential
-    jwt_secret = "secret_key_1234567890_super_private"
+    jwt_secret = os.environ.get('JWT_SECRET', 'dev-fallback-key')
     
     # Rule SEC004: Insecure Deserialization (pickle)
     # Allows Remote Code Execution (RCE) via custom payload
